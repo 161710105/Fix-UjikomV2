@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Gaji;
 use App\Karyawan;
-use App\Lembur;
 use DB;
 use Session;
 use PDF;
@@ -21,10 +20,9 @@ class GajiController extends Controller
     public function index()
     {
         $gaji = DB::table('gajis')
-                ->join('jabatans','gajis.jabatan','=','jabatans.id')
-                ->join('divisis','gajis.divisi','=','divisis.id')
-                ->join('departemens','gajis.departemen','=','departemens.id')
-                // ->join('lemburs','gajis.lembur','=','lemburs.id')
+                ->join('jabatans','gajis.jabatan','=','jabatans.nama_jabatan')
+                ->join('divisis','gajis.divisi','=','divisis.nama_divisi')
+                ->join('departemens','gajis.departemen','=','departemens.nama_departemen')
                 ->join('karyawans','gajis.karyawan_id','=','karyawans.id')
                 ->select('gajis.*','jabatans.nama_jabatan','jabatans.tunjangan_jabatan',
                         'divisis.nama_divisi',
@@ -42,8 +40,7 @@ class GajiController extends Controller
     public function create()
     {
         $karyawan = Karyawan::all();
-        $lembur = Lembur::all();
-        return view('gaji.create',compact('karyawan','lembur'));
+        return view('gaji.create',compact('karyawan'));
     }
 
     /**
@@ -61,7 +58,6 @@ class GajiController extends Controller
             'gaji_pokok' => 'required|',
             'tunjangan_jabatan' => 'required|',
             'tunjangan_keluarga' => 'required|',
-            'uang_lembur' => 'required|',
             'persen_pot_pph' => 'required|',
             'persen_pot_jamsostek' => 'required|',
             'jabatan' => 'required|',
@@ -71,6 +67,9 @@ class GajiController extends Controller
             'nomor_rekening' => 'required|',
             'rekening_atas_nama' => 'required|',
             'total_gaji' => 'required|',
+            'jumlah_jam_lembur' => 'required|',
+            'harga' => 'required|',
+            'total_uang_lembur' => 'required|',
             'karyawan_id' => 'required'
 
             ]);
@@ -81,7 +80,6 @@ class GajiController extends Controller
         $gaji->gaji_pokok = $request->gaji_pokok;
         $gaji->tunjangan_jabatan = $request->tunjangan_jabatan;
         $gaji->tunjangan_keluarga = $request->tunjangan_keluarga;
-        $gaji->uang_lembur = $request->uang_lembur;
         $gaji->persen_pot_pph = $request->persen_pot_pph;
         $gaji->persen_pot_jamsostek = $request->persen_pot_jamsostek;
         $gaji->jabatan = $request->jabatan;
@@ -91,11 +89,14 @@ class GajiController extends Controller
         $gaji->nomor_rekening = $request->nomor_rekening;
         $gaji->rekening_atas_nama = $request->rekening_atas_nama;
         $gaji->total_gaji = $request->total_gaji;
+        $gaji->jumlah_jam_lembur = $request->jumlah_jam_lembur;
+        $gaji->harga = $request->harga;
+        $gaji->total_uang_lembur = $request->total_uang_lembur;
         $gaji->karyawan_id = $request->karyawan_id;
         $gaji->save();
         Session::flash("flash_notification", [
         "level"=>"success",
-        "message"=>"Berhasil menyimpan <b>$gaji->nama</b>"
+        "message"=>"Berhasil menyimpan Gaji <b>$gaji->rekening_atas_nama</b>"
         ]);
         return redirect()->route('gaji.index');
     }
@@ -108,7 +109,9 @@ class GajiController extends Controller
      */
     public function show($id)
     {
-        //
+        $gaji = Gaji::findOrFail($id);
+        $karyawan = Karyawan::all();
+        return view('gaji.show',compact('gaji','karyawan'));
     }
 
     /**
@@ -121,8 +124,7 @@ class GajiController extends Controller
     {
         $gaji = Gaji::findOrFail($id);
         $karyawan = Karyawan::all();
-        $selectedKaryawan = Gaji::findOrFail($id)->nomor_induk;
-        return view('gaji.edit',compact('gaji','karyawan','selectedKaryawan'));
+        return view('gaji.edit',compact('gaji','karyawan'));
     }
 
     /**
@@ -136,14 +138,12 @@ class GajiController extends Controller
     {
         Alert::success('Data Successfully Changed','Good Job')->autoclose(2000);
         $this->validate($request,[
-            'nomor_induk' => 'required|',
-            'nama' => 'required|',
+            'karyawan_id' => 'required|',
             'bulan' => 'required|',
             'tahun' => 'required|',
             'gaji_pokok' => 'required|',
             'tunjangan_jabatan' => 'required|',
             'tunjangan_keluarga' => 'required|',
-            'uang_lembur' => 'required|',
             'persen_pot_pph' => 'required|',
             'persen_pot_jamsostek' => 'required|',
             'jabatan' => 'required|',
@@ -152,19 +152,20 @@ class GajiController extends Controller
             'nama_bank' => 'required|',
             'nomor_rekening' => 'required|',
             'rekening_atas_nama' => 'required|',
-            'total_gaji' => 'required|'
+            'total_gaji' => 'required|',
+            'jumlah_jam_lembur' => 'required|',
+            'harga' => 'required|',
+            'total_uang_lembur' => 'required|'
 
             ]);
 
-        $gaji = Gaji::findOrFail($id);;
-        $gaji->nomor_induk = $request->nomor_induk;
-        $gaji->nama = $request->nama;
+        $gaji = Gaji::findOrFail($id);
+        $gaji->karyawan_id = $request->karyawan_id;
         $gaji->bulan = $request->bulan;
         $gaji->tahun = $request->tahun;
         $gaji->gaji_pokok = $request->gaji_pokok;
         $gaji->tunjangan_jabatan = $request->tunjangan_jabatan;
         $gaji->tunjangan_keluarga = $request->tunjangan_keluarga;
-        $gaji->uang_lembur = $request->uang_lembur;
         $gaji->persen_pot_pph = $request->persen_pot_pph;
         $gaji->persen_pot_jamsostek = $request->persen_pot_jamsostek;
         $gaji->jabatan = $request->jabatan;
@@ -174,6 +175,9 @@ class GajiController extends Controller
         $gaji->nomor_rekening = $request->nomor_rekening;
         $gaji->rekening_atas_nama = $request->rekening_atas_nama;
         $gaji->total_gaji = $request->total_gaji;
+        $gaji->jumlah_jam_lembur = $request->jumlah_jam_lembur;
+        $gaji->harga = $request->harga;
+        $gaji->total_uang_lembur = $request->total_uang_lembur;
         $gaji->save();
         Session::flash("flash_notification", [
         "level"=>"success",
@@ -229,17 +233,16 @@ class GajiController extends Controller
 
     public function slipgaji(Request $request, $id)
     {
-        $gaji = DB::table('gajis')
-                ->join('jabatans','gajis.jabatan','=','jabatans.id')
-                ->join('divisis','gajis.divisi','=','divisis.id')
-                ->join('departemens','gajis.departemen','=','departemens.id')
-                // ->join('lemburs','gajis.lembur','=','lemburs.id')
+        $gaji = $gaji = DB::table('gajis')
+                ->join('jabatans','gajis.jabatan','=','jabatans.nama_jabatan')
+                ->join('divisis','gajis.divisi','=','divisis.nama_divisi')
+                ->join('departemens','gajis.departemen','=','departemens.nama_departemen')
                 ->join('karyawans','gajis.karyawan_id','=','karyawans.id')
                 ->select('gajis.*','jabatans.nama_jabatan','jabatans.tunjangan_jabatan',
                         'divisis.nama_divisi',
-                    'karyawans.nama','karyawans.tunjangan_keluarga','karyawans.gaji_pokok','karyawans.nama_bank','karyawans.nomor_rekening',
+                    'karyawans.nama','karyawans.nomor_rekening','karyawans.tunjangan_keluarga','karyawans.gaji_pokok','karyawans.nama_bank','karyawans.nomor_rekening',
                     'karyawans.rekening_atas_nama','departemens.nama_departemen'
-                    )->where('gajis.karyawan_id','=',$id)->get();
+                    )->where('gajis.id','=',$id)->get();
 
         if($request->view_type === 'download') {
             $pdf = PDF::loadView('gaji.slipgaji',['gaji'=> $gaji]);
@@ -252,5 +255,34 @@ class GajiController extends Controller
             $pdf->loadHTML($view->render());
             return $pdf->stream();
         }
+    }
+
+    public function getKaryawan(Request $request){
+        $karyawan = Karyawan::find($request->id);
+        $karyawan_id = $karyawan->id;
+        $gaji_pokok = $karyawan->gaji_pokok;
+        $tunjangan_jabatan = $karyawan->Jabatan->tunjangan_jabatan;
+        $tunjangan_keluarga = $karyawan->tunjangan_keluarga;
+        $jabatan = $karyawan->Jabatan->nama_jabatan;
+        $divisi = $karyawan->Divisi->nama_divisi;
+        $departemen = $karyawan->Departemen->nama_departemen;
+        $nama_bank = $karyawan->nama_bank;
+        $nomor_rekening = $karyawan->nomor_rekening;
+        $rekening_atas_nama = $karyawan->rekening_atas_nama;
+
+        return json_encode([
+            "karyawan_id" => $karyawan_id,
+            "gaji_pokok" => $gaji_pokok,
+            "tunjangan_jabatan" => $tunjangan_jabatan,
+            "tunjangan_keluarga" => $tunjangan_keluarga,
+            "jabatan" => $jabatan,
+            "divisi" => $divisi,
+            "departemen" => $departemen,
+            "nama_bank" => $nama_bank,
+            "nomor_rekening" => $nomor_rekening,
+            "rekening_atas_nama" => $rekening_atas_nama,
+  
+        ]);
+
     }
 }

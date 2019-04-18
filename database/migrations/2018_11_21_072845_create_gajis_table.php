@@ -23,7 +23,9 @@ class CreateGajisTable extends Migration
             $table->integer('gaji_pokok');
             $table->integer('tunjangan_jabatan');
             $table->integer('tunjangan_keluarga');
-            $table->integer('uang_lembur');
+            $table->integer('jumlah_jam_lembur');
+            $table->integer('harga');
+            $table->integer('total_uang_lembur');
             $table->integer('persen_pot_pph');
             $table->integer('persen_pot_jamsostek');
             $table->string('jabatan');

@@ -98,7 +98,7 @@ class DepartemenController extends Controller
         $departemen->save();
         Session::flash("flash_notification", [
         "level"=>"success",
-        "message"=>"Berhasil mengedit <b>$departemen->nama_departemen</b>"
+        "message"=>"Berhasil mengubah data <b>$departemen->nama_departemen</b>"
         ]);
         return redirect()->route('departemen.index');
     }
@@ -111,13 +111,8 @@ class DepartemenController extends Controller
      */
     public function destroy($id)
     {
-        Alert::error('Data Successfully Deleted','Good Job')->autoclose(2000);
-        $departemen = Departemen::findOrFail($id);
-        $departemen->delete();
-        Session::flash("flash_notification", [
-        "level"=>"success",
-        "message"=>"Data Berhasil dihapus"
-        ]);
-        return redirect()->route('departemen.index');
+
+        $departemen = Departemen::findOrFail($id)->delete();
+        return redirect()->back();
     }
 }

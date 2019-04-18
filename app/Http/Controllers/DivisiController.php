@@ -99,7 +99,7 @@ class DivisiController extends Controller
         $divisi->save();
         Session::flash("flash_notification", [
         "level"=>"success",
-        "message"=>"Berhasil mengedit <b>$divisi->nama_divisi</b>"
+        "message"=>"Berhasil mengubah data <b>$divisi->nama_divisi</b>"
         ]);
         return redirect()->route('divisi.index');
     }
@@ -112,13 +112,7 @@ class DivisiController extends Controller
      */
     public function destroy($id)
     {
-        Alert::error('Data Successfully Deleted','Good Job')->autoclose(2000);
-        $divisi = Divisi::findOrFail($id);
-        $divisi->delete();
-        Session::flash("flash_notification", [
-        "level"=>"success",
-        "message"=>"Data Berhasil dihapus"
-        ]);
-        return redirect()->route('divisi.index');
+        $divisi = Divisi::findOrFail($id)->delete();
+        return redirect()->back();
     }
 }

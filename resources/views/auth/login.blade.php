@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login PAYRoll</title>
+    <title>Login Aplikasi Penggajian</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->  
@@ -42,7 +42,7 @@
                     @csrf
                     <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
                         <span class="label-input100">{{ __('E-Mail Address') }}</span>
-                        <input id="email" type="email" class="input100{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="Enter username" required autofocus>
+                        <input id="email" type="email" class="input100{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="Enter email" required autofocus>
                         @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -68,12 +68,6 @@
                             <label class="label-checkbox100" for="remember">
                                 {{ __('Remember Me') }}
                             </label>
-                        </div>
-
-                        <div>
-                            <a href="{{ route('password.request') }}" class="txt1">
-                                Forgot Password?
-                            </a>
                         </div>
                     </div>
 

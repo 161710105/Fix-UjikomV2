@@ -1,13 +1,21 @@
 @extends('layouts.admin')
 @section('konten')
+@include('layouts._flash')
+<div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Edit Data Jabatan</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
 			<div class="panel panel-primary">
-			  <div class="panel-heading">Edit Data Jabatan 
 			  	<div class="panel-title pull-right"><a href="{{ url()->previous() }}">Kembali</a>
 			  	</div>
-			  </div>
 			  <div class="panel-body">
 			  	<form action="{{ route('jabatan.update',$jabatan->id) }}" method="post" >
 			  		<input name="_method" type="hidden" value="PATCH">

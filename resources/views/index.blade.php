@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sufee Admin - HTML5 Admin Template</title>
+    <title>Aplikasi Penggajian WEB</title>
     <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -29,8 +29,33 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
 </head>
+<script type="text/javascript">
+    //set timezone
+    <?php date_default_timezone_set('Asia/Jakarta'); ?>
+    //buat object date berdasarkan waktu di server
+    var serverTime = new Date(<?php print date('Y, m, d, H, i, s, 0'); ?>);
+    //buat object date berdasarkan waktu di client
+    var clientTime = new Date();
+    //hitung selisih
+    var Diff = serverTime.getTime() - clientTime.getTime();    
+    //fungsi displayTime yang dipanggil di bodyOnLoad dieksekusi tiap 1000ms = 1detik
+    function displayServerTime(){
+        //buat object date berdasarkan waktu di client
+        var clientTime = new Date();
+        //buat object date dengan menghitung selisih waktu client dan server
+        var time = new Date(clientTime.getTime() + Diff);
+        //ambil nilai jam
+        var sh = time.getHours().toString();
+        //ambil nilai menit
+        var sm = time.getMinutes().toString();
+        //ambil nilai detik
+        var ss = time.getSeconds().toString();
+        //tampilkan jam:menit:detik dengan menambahkan angka 0 jika angkanya cuma satu digit (0-9)
+        document.getElementById("clock").innerHTML = (sh.length==1?"0"+sh:sh) + ":" + (sm.length==1?"0"+sm:sm) + ":" + (ss.length==1?"0"+ss:ss);
+    }
+</script>
 
-<body>
+<body onload="setInterval('displayServerTime()', 1000);">
 
 
     <!-- Left Panel -->
@@ -48,179 +73,148 @@
     @include('partials.header')
 
         <!-- Header-->
-
-        <div class="content mt-3">
-
-            <div class="col-xl-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <h4 class="card-title mb-0">Traffic</h4>
-                                <div class="small text-muted">October 2017</div>
-                            </div>
-                            <!--/.col-->
-                            <div class="col-sm-8 hidden-sm-down">
-                                <button type="button" class="btn btn-primary float-right bg-flat-color-1"><i class="fa fa-cloud-download"></i></button>
-                                <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar with button groups">
-                                    <div class="btn-group mr-3" data-toggle="buttons" aria-label="First group">
-                                        <label class="btn btn-outline-secondary">
-                                            <input type="radio" name="options" id="option1"> Day
-                                        </label>
-                                        <label class="btn btn-outline-secondary active">
-                                            <input type="radio" name="options" id="option2" checked=""> Month
-                                        </label>
-                                        <label class="btn btn-outline-secondary">
-                                            <input type="radio" name="options" id="option3"> Year
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.col-->
-
-
-                        </div>
-                        <!--/.row-->
-                        <div class="chart-wrapper mt-4">
-                            <canvas id="trafficChart" style="height:200px;" height="200"></canvas>
-                        </div>
-
-                    </div>
-                    <div class="card-footer">
-                        <ul>
-                            <li>
-                                <div class="text-muted">Visits</div>
-                                <strong>29.703 Users (40%)</strong>
-                                <div class="progress progress-xs mt-2" style="height: 5px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                            <li class="hidden-sm-down">
-                                <div class="text-muted">Unique</div>
-                                <strong>24.093 Users (20%)</strong>
-                                <div class="progress progress-xs mt-2" style="height: 5px;">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="text-muted">Pageviews</div>
-                                <strong>78.706 Views (60%)</strong>
-                                <div class="progress progress-xs mt-2" style="height: 5px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                            <li class="hidden-sm-down">
-                                <div class="text-muted">New Users</div>
-                                <strong>22.123 Users (80%)</strong>
-                                <div class="progress progress-xs mt-2" style="height: 5px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                            <li class="hidden-sm-down">
-                                <div class="text-muted">Bounce Rate</div>
-                                <strong>40.15%</strong>
-                                <div class="progress progress-xs mt-2" style="height: 5px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                        </ul>
+            <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
                     </div>
                 </div>
             </div>
-
-            <div class="col-xl-3 col-lg-6">
-                <section class="card">
-                    <div class="twt-feed blue-bg">
-                        <div class="corner-ribon black-ribon">
-                            <i class="fa fa-twitter"></i>
-                        </div>
-                        <div class="fa fa-twitter wtt-mark"></div>
-
-                        <div class="media">
-                            <a href="#">
-                                <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px;" alt="" src="images/admin.jpg">
-                            </a>
-                            <div class="media-body">
-                                <h2 class="text-white display-6">Jim Doe</h2>
-                                <p class="text-light">Project Manager</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="weather-category twt-category">
-                        <ul>
-                            <li class="active">
-                                <h5>750</h5>
-                                Tweets
-                            </li>
-                            <li>
-                                <h5>865</h5>
-                                Following
-                            </li>
-                            <li>
-                                <h5>3645</h5>
-                                Followers
-                            </li>
-                        </ul>
-                    </div>
-                    <footer class="twt-footer">
-                        <a href="#"><i class="fa fa-camera"></i></a>
-                        <a href="#"><i class="fa fa-map-marker"></i></a>
-                        New Castle, UK
-                        <span class="pull-right">
-                            32
-                        </span>
-                    </footer>
-                </section>
-            </div>
-
-
-            <div class="col-xl-3 col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-money text-success border-success"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Total Profit</div>
-                                <div class="stat-digit">1,012</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xl-3 col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-user text-primary border-primary"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">New Customer</div>
-                                <div class="stat-digit">961</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-one">
-                            <div class="stat-icon dib"><i class="ti-layout-grid2 text-warning border-warning"></i></div>
-                            <div class="stat-content dib">
-                                <div class="stat-text">Active Projects</div>
-                                <div class="stat-digit">770</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
+        <div class="col-sm-12 mb-4">
+                        <div class="card-group">
+                            <div class="card col-lg-2 col-md-6 no-padding no-shadow">
+                                <div class="card-body bg-flat-color-4">
+                                    <div class="h1 text-light text-right mb-4">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                    <div class="h4 mb-0 text-light">
+                                    <span id="clock">
+                                    <?php echo "" . date("H:i:s");?>
+                                    </span>
+                                    </div>
+                                    <small class="text-light text-uppercase font-weight-bold">Waktu</small>
+                                    <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
+                                </div>
+                            </div>
+                            <div class="card col-lg-2 col-md-6 no-padding no-shadow">
+                                <div class="card-body bg-flat-color-3">
+                                    <div class="h1 text-light text-right mb-4">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <div class="h4 mb-0 text-light">
+                                        <span class="date"><?php echo "" . date("d/m/Y");?></span>
+                                    </div>
+                                    <small class="text-light text-uppercase font-weight-bold">Tanggal</small>
+                                    <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
+                                </div>
+                            </div>
+                            <div class="card col-lg-2 col-md-6 no-padding bg-flat-color-1">
+                                <div class="card-body">
+                                    <div class="h1 text-muted text-right mb-4">
+                                        <i class="fa fa-user text-light"></i>
+                                    </div>
+
+                                    <div class="h4 mb-0 text-light">
+                                        <span class="count">{{$jumlah_karyawan}}</span>
+                                    </div>
+                                    <small class="text-uppercase font-weight-bold text-light">Karyawan</small>
+                                    <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
+                                </div>
+                            </div>
+                            <div class="card col-lg-2 col-md-6 no-padding no-shadow">
+                                <div class="card-body bg-flat-color-2">
+                                    <div class="h1 text-muted text-right mb-4">
+                                        <i class="fa fa-building-o text-light"></i>
+                                    </div>
+                                    <div class="h4 mb-0 text-light">
+                                        <span class="count">{{ $jumlah_departemen }}</span>
+                                    </div>
+                                    <small class="text-uppercase font-weight-bold text-light">Departemen</small>
+                                    <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
+                                </div>
+                            </div>
+                            <div class="card col-lg-2 col-md-6 no-padding no-shadow">
+                                <div class="card-body bg-flat-color-5">
+                                    <div class="h1 text-right mb-4">
+                                        <i class="fa fa-sitemap text-light"></i>
+                                    </div>
+                                    <div class="h4 mb-0 text-light">
+                                        <span class="count">{{ $jumlah_divisi }}</span>
+                                    </div>
+                                    <small class="text-light text-uppercase font-weight-bold">Divisi</small>
+                                    <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
+                                </div>
+                            </div>
+                            <div class="card col-lg-2 col-md-6 no-padding no-shadow">
+                                <div class="card-body bg-flat-color-1">
+                                    <div class="h1 text-right text-light mb-4">
+                                        <i class="fa fa-users"></i>
+                                    </div>
+                                    <div class="h4 mb-0 text-light">
+                                        <span class="count">{{ $jumlah_jabatan }}</span>
+                                    </div>
+                                    <small class="text-uppercase font-weight-bold text-light">Jabatan</small>
+                                    <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+ <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Data Karyawan</strong>
+                            </div>
+                            <div class="card-body">
+                                <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nomor Induk</th>
+                                            <th>Nama</th>
+                                            <th>Tempat Lahir</th>
+                                            <th>Tanggal Lahir</th>
+                                            <!-- <th>Jenis Kelamin</th> -->
+                                            <th>Nomor Telepon</th>
+                                            <th>Jabatan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $nomor = 1; ?>
+                                        @php $no = 1; @endphp
+                                        @foreach($karyawans as $data)
+                                        <tr>
+                                            <td>{{ $no++ }}</td>
+                                            <td><p>{{ $data->nomor_induk }}</p></td>
+                                            <td>{{ $data->nama}}</td>
+                                            <td>{{ $data->tempat_lahir}}</td>
+                                            <td>{{ $data->tanggal_lahir}}</td>
+                                            <!-- <td>{{ $data->jenis_kelamin}}</td> -->
+                                            <td>{{ $data->nomor_telepon}}</td>
+                                            <td>{{ $data->Jabatan->nama_jabatan}}</td>
+                                            
+                                      </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content -->
 
         
-    </div><!-- /#right-panel -->
+        </div>
+        <!-- /#right-panel -->
 
     <!-- Right Panel -->
 

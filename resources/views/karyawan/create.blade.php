@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('konten')
+@include('layouts._flash')
 		<div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
@@ -31,7 +32,7 @@
 
 			  		<div class="form-group {{ $errors->has('nomor_induk') ? ' has-error' : '' }}">
 			  			<label class="control-label">Nomor Induk</label>	
-			  			<input type="text" name="nomor_induk" class="form-control"  required>
+			  			<input type="number" name="nomor_induk" class="form-control"  required>
 			  			@if ($errors->has('nomor_induk'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('nomor_induk') }}</strong>
@@ -237,16 +238,6 @@
 			  			@if ($errors->has('tanggal_diangkat'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('tanggal_diangkat') }}</strong>
-                            </span>
-                        @endif
-			  		</div>
-
-			  		<div class="form-group {{ $errors->has('tanggal_keluar') ? ' has-error' : '' }}">
-			  			<label class="control-label">Tanggal Keluar</label>	
-			  			<input type="date" name="tanggal_keluar" class="form-control"  required>
-			  			@if ($errors->has('tanggal_keluar'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('tanggal_keluar') }}</strong>
                             </span>
                         @endif
 			  		</div>

@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('konten')
+@include('layouts._flash')
 		<div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
@@ -26,8 +27,7 @@
                                         	<th>No</th>
                                             <th>Kode Departemen</th>
                                             <th>Nama Departemen</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -40,14 +40,13 @@
 									    	<td>{{ $data->nama_departemen}}</td>
 				    	
 <td>
+    <form method="post" action="{{ route('departemen.destroy',$data->id) }}">
 	<a class="btn btn-warning" href="{{ route('departemen.edit',$data->id) }}"><i class="fa fa-pencil"></i>&nbsp;Edit</a>
-</td>
-<td>
 	<form method="post" action="{{ route('departemen.destroy',$data->id) }}">
 		<input name="_token" type="hidden" value="{{ csrf_token() }}">
 		<input type="hidden" name="_method" value="DELETE">
 
-		<button type="submit" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Delete</button>
+		<button type="submit" onclick="return confirm('Are you sure ?')" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Delete</button>
 	</form>
 </td>
                                         </tr>

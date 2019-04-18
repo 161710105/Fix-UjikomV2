@@ -21,5 +21,9 @@ Route::group(
 	['as'=> 'api.', 'middleware'=>['cors']],
 	function(){
 		Route::resource('latihan','API\LatihanController');
+		Route::resource('departemen','API\DepartemenController');
+		Route::resource('divisi','API\DivisiController');
+		Route::resource('jabatan','API\JabatanController');
+		Route::resource('gaji','API\GajiController');
 	}
 );

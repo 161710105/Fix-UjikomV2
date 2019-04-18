@@ -1,13 +1,22 @@
 @extends('layouts.admin')
 @section('konten')
-<div class="row">
-	<div class="container">
+@include('layouts._flash')
 		<div class="col-md-12">
 			<div class="panel panel-primary">
-			  <div class="panel-heading">Edit Data Karyawan 
-			  	<div class="panel-title pull-right"><a href="{{ url()->previous() }}">Kembali</a>
-			  	</div>
-			  </div>
+			<div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Edit Data&nbsp;{{ $karyawan->nama }} </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="page-header float-right">
+                    <div class="page-title">
+                        <a href="{{ url()->previous() }}">Kembali</a>
+                    </div>
+                </div>
+        </div>
 			  <div class="panel-body">
 			  	<form action="{{ route('karyawan.update',$karyawan->id) }}" method="post" >
 			  		<input name="_method" type="hidden" value="PATCH">
@@ -54,7 +63,7 @@
 
 			  		<div class="form-group {{ $errors->has('jenis_kelamin') ? ' has-error' : '' }}">
 			  			<label class="control-label">Jenis Kelamin</label>
-			  			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+			  			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
 			  			<input type="radio" name="jenis_kelamin" class="form-check-input"  value="Laki-laki" {{ $karyawan->jenis_kelamin == 'Laki-laki' ? 'checked' : '' }}>Laki-laki
 			  			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			  			<input type="radio" name="jenis_kelamin" class="form-check-input"  value="Perempuan" {{ $karyawan->jenis_kelamin == 'Perempuan' ? 'checked' : '' }}>Perempuan
@@ -84,7 +93,7 @@
 
 			  		<div class="form-group {{ $errors->has('status_pernikahan') ? ' has-error' : '' }}">
 			  			<label class="control-label">Status Pernikahan</label>
-			  			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+			  			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
 			  			<input type="radio" name="status_pernikahan" class="form-check-input"  value="Kawin" {{ $karyawan->status_pernikahan == 'Kawin' ? 'checked' : '' }}>Kawin
 			  			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			  			<input type="radio" name="status_pernikahan" class="form-check-input"  value="Belum Kawin" {{ $karyawan->status_pernikahan == 'Belum Kawin' ? 'checked' : '' }}>Belum Kawin
@@ -207,16 +216,6 @@
                         @endif
 			  		</div>
 
-			  		<div class="form-group {{ $errors->has('tanggal_keluar') ? ' has-error' : '' }}">
-			  			<label class="control-label">Tanggal Keluar</label>	
-			  			<input type="date" name="tanggal_keluar" class="form-control" value="{{ $karyawan->tanggal_keluar }}"  required>
-			  			@if ($errors->has('tanggal_keluar'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('tanggal_keluar') }}</strong>
-                            </span>
-                        @endif
-			  		</div>
-
 			  		<div class="form-group {{ $errors->has('nama_bank') ? ' has-error' : '' }}">
 			  			<label class="control-label">Nama Bank</label>	
 			  			<input type="text" name="nama_bank" class="form-control" value="{{ $karyawan->nama_bank }}"  required>
@@ -269,6 +268,4 @@
 			  </div>
 			</div>	
 		</div>
-	</div>
-</div>
 @endsection

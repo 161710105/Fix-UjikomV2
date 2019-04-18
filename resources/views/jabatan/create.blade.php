@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('konten')
+@include('layouts._flash')
 		<div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
@@ -40,13 +41,42 @@
 
 			  		<div class="form-group {{ $errors->has('tunjangan_jabatan') ? ' has-error' : '' }}">
 			  			<label class="control-label">Tunjangan Jabatan</label>	
-			  			<input type="text" name="tunjangan_jabatan" class="form-control"  required>
+			  			<input type="number" name="tunjangan_jabatan"  class="form-control"  required>
 			  			@if ($errors->has('tunjangan_jabatan'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('tunjangan_jabatan') }}</strong>
                             </span>
                         @endif
 			  		</div>
+
+			  		<script type="text/javascript">
+		
+						var rupiah = document.getElementById('rupiah');
+						rupiah.addEventListener('keyup', function(e){
+							// tambahkan 'Rp.' pada saat form di ketik
+							// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+							rupiah.value = formatRupiah(this.value, 'Rp ');
+						});
+				 
+						/* Fungsi formatRupiah */
+						function formatRupiah(angka, prefix){
+							var number_string = angka.replace(/[^,\d]/g, '').toString(),
+							split   		= number_string.split(','),
+							sisa     		= split[0].length % 3,
+							rupiah     		= split[0].substr(0, sisa),
+							ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+				 
+							// tambahkan titik jika yang di input sudah menjadi angka ribuan
+							if(ribuan){
+								separator = sisa ? '.' : '';
+								rupiah += separator + ribuan.join('.');
+							}
+				 
+							rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+							return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+						}
+
+					</script>
 
 			  		<div class="form-group {{ $errors->has('level_jabatan') ? ' has-error' : '' }}">
 			  			<label class="control-label">Level Jabatan</label>	

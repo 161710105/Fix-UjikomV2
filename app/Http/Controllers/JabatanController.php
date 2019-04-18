@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Jabatan;
 use Session;
-use Alert;
 
 class JabatanController extends Controller
 {
@@ -38,7 +37,7 @@ class JabatanController extends Controller
      */
     public function store(Request $request)
     {
-        Alert::success('Data Successfully Saved','Good Job')->autoclose(2000);
+        
         $this->validate($request,[
             'kode_jabatan' => 'required|unique:jabatans',
             'nama_jabatan' => 'required|',
@@ -90,7 +89,7 @@ class JabatanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Alert::success('Data Successfully Changed','Good Job')->autoclose(2000);
+        
         $this->validate($request,[
             'kode_jabatan' => 'required|',
             'nama_jabatan' => 'required|',
@@ -106,7 +105,7 @@ class JabatanController extends Controller
         $jabatan->save();
         Session::flash("flash_notification", [
         "level"=>"success",
-        "message"=>"Berhasil mengedit <b>$jabatan->nama_jabatan</b>"
+        "message"=>"Berhasil mengubah data <b>$jabatan->nama_jabatan</b>"
         ]);
         return redirect()->route('jabatan.index');
     }
@@ -119,13 +118,7 @@ class JabatanController extends Controller
      */
     public function destroy($id)
     {
-        Alert::error('Data Successfully Deleted','Good Job')->autoclose(2000);
-        $jabatan = Jabatan::findOrFail($id);
-        $jabatan->delete();
-        Session::flash("flash_notification", [
-        "level"=>"success",
-        "message"=>"Data Berhasil dihapus"
-        ]);
-        return redirect()->route('jabatan.index');
+        $jabatan = Jabatan::findOrFail($id)->delete();
+        return redirect()->back();
     }
 }

@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('konten')
+@include('layouts._flash')
 		<div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
@@ -21,7 +22,8 @@
 
 			  		<div class="form-group {{ $errors->has('karyawan_id') ? ' has-error' : '' }}">
 			  			<label class="control-label">Nama Karyawan</label>	
-			  			<select name="karyawan_id" class="form-control">
+			  			<select id="karyawan_id" name="karyawan_id" class="form-control">
+			  				<option disabled selected>-- Pilih Karyawan --</option>
 			  				@foreach($karyawan as $data)
 			  				<option value="{{ $data->id }}">{{ $data->nama }}</option>
 			  				@endforeach
@@ -60,7 +62,7 @@
 
 			  		<div class="form-group {{ $errors->has('tahun') ? ' has-error' : '' }}">
 			  			<label class="control-label">Tahun</label>	
-			  			<input type="number" name="tahun" class="form-control"  required>
+			  			<input type="number" name="tahun" value="<?php echo "" . date("Y");?>" class="form-control" readonly>
 			  			@if ($errors->has('tahun'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('tahun') }}</strong>
@@ -70,55 +72,27 @@
 
 			  		<div class="form-group {{ $errors->has('gaji_pokok') ? ' has-error' : '' }}">
 			  			<label class="control-label">Gaji Pokok</label>	
-			  			<input id="gaji_pokok" type="number" name="gaji_pokok" class="form-control prc" value="{{ $data->gaji_pokok }}" readonly>
+			  			<input id="gaji_pokok" type="number" name="gaji_pokok" class="form-control" value="" readonly>
 			  			@if ($errors->has('gaji_pokok'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('gaji_pokok') }}</strong>
                             </span>
                         @endif
 			  		</div>
-
-			  		<!-- <div class="form-group {{ $errors->has('gaji_pokok') ? ' has-error' : '' }}">
-			  			<label class="control-label">Gaji Pokok</label>	
-			  			<select name="gaji_pokok" class="form-control prc">
-			  				@foreach($karyawan as $data)
-			  				<option id="gaji_pokok" value="{{ $data->id }}">{{ $data->gaji_pokok }}</option>
-			  				@endforeach
-			  			</select>
-			  			@if ($errors->has('gaji_pokok'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('gaji_pokok') }}</strong>
-                            </span>
-                        @endif
-			  		</div> -->
 
 			  		<div class="form-group {{ $errors->has('tunjangan_jabatan') ? ' has-error' : '' }}">
 			  			<label class="control-label">Tunjangan Jabatan</label>	
-			  			<input id="tunjangan_jabatan" type="number" name="tunjangan_jabatan" class="form-control prc" value="{{ $data->Jabatan->tunjangan_jabatan }}" readonly>
+			  			<input id="tunjangan_jabatan" type="number" name="tunjangan_jabatan" class="form-control" value="" readonly>
 			  			@if ($errors->has('tunjangan_jabatan'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('tunjangan_jabatan') }}</strong>
                             </span>
                         @endif
 			  		</div>
-
-			  		<!-- <div class="form-group {{ $errors->has('tunjangan_jabatan') ? ' has-error' : '' }}">
-			  			<label class="control-label">Tunjangan Jabatan</label>	
-			  			<select name="tunjangan_jabatan" class="form-control prc">
-			  				@foreach($karyawan as $data)
-			  				<option id="tunjangan_jabatan" value="{{ $data->id }}">{{ $data->Jabatan->tunjangan_jabatan }}</option>
-			  				@endforeach
-			  			</select>
-			  			@if ($errors->has('tunjangan_jabatan'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('tunjangan_jabatan') }}</strong>
-                            </span>
-                        @endif
-			  		</div> -->
 
 			  		<div class="form-group {{ $errors->has('tunjangan_keluarga') ? ' has-error' : '' }}">
 			  			<label class="control-label">Tunjangan Keluarga</label>	
-			  			<input id="tunjangan_keluarga" type="number" name="tunjangan_keluarga" class="form-control prc" value="{{ $data->tunjangan_keluarga }}" readonly>
+			  			<input id="tunjangan_keluarga" type="number" name="tunjangan_keluarga" class="form-control" value="" readonly>
 			  			@if ($errors->has('tunjangan_keluarga'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('tunjangan_keluarga') }}</strong>
@@ -126,49 +100,41 @@
                         @endif
 			  		</div>
 
-			  		<!-- <div class="form-group {{ $errors->has('tunjangan_keluarga') ? ' has-error' : '' }}">
-			  			<label class="control-label">Tunjangan Keluarga</label>	
-			  			<select name="tunjangan_keluarga" class="form-control prc">
-			  				@foreach($karyawan as $data)
-			  				<option id="tunjangan_keluarga" value="{{ $data->id }}">{{ $data->tunjangan_keluarga }}</option>
-			  				@endforeach
-			  			</select>
-			  			@if ($errors->has('tunjangan_keluarga'))
+			  		<div class="form-group {{ $errors->has('jumlah_jam_lembur') ? ' has-error' : '' }}">
+			  			<label class="control-label">Jumlah Jam Lembur</label>	
+			  			<input id="jumlah_jam_lembur" type="number" name="jumlah_jam_lembur" class="form-control prc"  required>
+			  			@if ($errors->has('jumlah_jam_lembur'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('tunjangan_keluarga') }}</strong>
-                            </span>
-                        @endif
-			  		</div> -->
-
-			  		<!-- <div class="form-group {{ $errors->has('uang_lembur') ? ' has-error' : '' }}">
-			  			<label class="control-label">Uang Lembur</label>	
-			  			<select name="uang_lembur" class="form-control prc">
-			  				@foreach($lembur as $data)
-			  				<option id="uang_lembur" value="{{ $data->id }}">{{ $data->total_uang_lembur }}</option>
-			  				@endforeach
-			  			</select>
-			  			@if ($errors->has('uang_lembur'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('uang_lembur') }}</strong>
-                            </span>
-                        @endif
-			  		</div> -->
-
-			  		<div class="form-group {{ $errors->has('uang_lembur') ? ' has-error' : '' }}">
-			  			<label class="control-label">Uang Lembur</label>
-			  			@foreach($lembur as $data)	
-			  			<input id="uang_lembur" type="number" name="uang_lembur" class="form-control prc" value="{{ $data->total_uang_lembur }}" readonly>
-			  			@endforeach
-			  			@if ($errors->has('uang_lembur'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('uang_lembur') }}</strong>
+                                <strong>{{ $errors->first('jumlah_jam_lembur') }}</strong>
                             </span>
                         @endif
 			  		</div>
+
+			  		<div class="form-group {{ $errors->has('harga') ? ' has-error' : '' }}">
+			  			<label class="control-label">Upah Lembur/Jam</label>	
+			  			<input id="harga" type="number" value="25000" name="harga" class="form-control prc"  readonly>
+			  			@if ($errors->has('harga'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('harga') }}</strong>
+                            </span>
+                        @endif
+			  		</div>
+
+			  		<div class="form-group {{ $errors->has('total_uang_lembur') ? ' has-error' : '' }}">
+			  			<label class="control-label">Total Uang Lembur</label>	
+			  			<input id="total_uang_lembur" type="number" name="total_uang_lembur" class="form-control"  readonly>
+			  			@if ($errors->has('total_uang_lembur'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('total_uang_lembur') }}</strong>
+                            </span>
+                        @endif
+			  		</div>
+
+
 			  		
 			  		<div class="form-group {{ $errors->has('persen_pot_pph') ? ' has-error' : '' }}">
 			  			<label class="control-label">Persen Pot PPH</label>	
-			  			<input id="persen_pot_pph" type="number" name="persen_pot_pph" class="form-control prc" value="5" readonly>
+			  			<input id="persen_pot_pph" type="number" name="persen_pot_pph" class="form-control" value="5" readonly>
 			  			@if ($errors->has('persen_pot_pph'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('persen_pot_pph') }}</strong>
@@ -178,7 +144,7 @@
 
 			  		<div class="form-group {{ $errors->has('persen_pot_jamsostek') ? ' has-error' : '' }}">
 			  			<label class="control-label">Persen Pot JAMSOSTEK</label>	
-			  			<input id="persen_pot_jamsostek" type="number" name="persen_pot_jamsostek" class="form-control prc" value="2"  readonly>
+			  			<input id="persen_pot_jamsostek" type="number" name="persen_pot_jamsostek" class="form-control" value="2"  readonly>
 			  			@if ($errors->has('persen_pot_jamsostek'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('persen_pot_jamsostek') }}</strong>
@@ -186,62 +152,35 @@
                         @endif
 			  		</div>
 
-			  		<div class="form-group {{ $errors->has('jabatan') ? ' has-error' : '' }}">
-			  			<label class="control-label">Jabatan</label>	
-			  			<select name="jabatan" class="form-control">
-			  				@foreach($karyawan as $data)
-			  				<option value="{{ $data->id }}">{{ $data->Jabatan->nama_jabatan }}</option>
-			  				@endforeach
-			  			</select>
-			  			@if ($errors->has('jabatan'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('jabatan') }}</strong>
-                            </span>
-                        @endif
+			  		<div class="form-group {{ $errors->has('departemen') ? ' has-error' : '' }}">
+			  			<label class="control-label">Departemen</label>	
+			  			<input id="departemen" type="text" name="departemen" class="form-control" value="" readonly>
 			  		</div>
 
 			  		<div class="form-group {{ $errors->has('divisi') ? ' has-error' : '' }}">
 			  			<label class="control-label">Divisi</label>	
-			  			<select name="divisi" class="form-control">
-			  				@foreach($karyawan as $data)
-			  				<option value="{{ $data->id }}">{{ $data->Divisi->nama_divisi }}</option>
-			  				@endforeach
-			  			</select>
-			  			@if ($errors->has('divisi'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('divisi') }}</strong>
-                            </span>
-                        @endif
+			  			<input id="divisi" type="text" name="divisi" class="form-control" value="" readonly>
 			  		</div>
 
-			  		<div class="form-group {{ $errors->has('departemen') ? ' has-error' : '' }}">
-			  			<label class="control-label">Departemen</label>	
-			  			<select name="departemen" class="form-control">
-			  				@foreach($karyawan as $data)
-			  				<option value="{{ $data->id }}">{{ $data->Departemen->nama_departemen }}</option>
-			  				@endforeach
-			  			</select>
-			  			@if ($errors->has('departemen'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('departemen') }}</strong>
-                            </span>
-                        @endif
+			  		<div class="form-group {{ $errors->has('jabatan') ? ' has-error' : '' }}">
+			  			<label class="control-label">Jabatan</label>	
+			  			<input id="jabatan" type="text" name="jabatan" class="form-control" value="" readonly>
 			  		</div>
 
 			  		<div class="form-group {{ $errors->has('nama_bank') ? ' has-error' : '' }}">
 			  			<label class="control-label">Nama Bank</label>	
-			  			<input id="nama_bank" type="text" name="nama_bank" class="form-control prc" value="{{ $data->nama_bank }}" readonly>
+			  			<input id="nama_bank" type="text" name="nama_bank" class="form-control" value="" readonly>
 			  		</div>
 
 			  		<div class="form-group {{ $errors->has('nomor_rekening') ? ' has-error' : '' }}">
 			  			<label class="control-label">Nomor Rekening</label>	
-			  			<input id="nomor_rekening" type="number" name="nomor_rekening" class="form-control prc" value="{{ $data->nomor_rekening }}" readonly>
+			  			<input id="nomor_rekening" type="number" name="nomor_rekening" class="form-control" value="" readonly>
 			  		</div>
 
 	
 			  		<div class="form-group {{ $errors->has('rekening_atas_nama') ? ' has-error' : '' }}">
 			  			<label class="control-label">Rekening Atas Nama</label>	
-			  			<input id="rekening_atas_nama" type="text" name="rekening_atas_nama" class="form-control prc" value="{{ $data->rekening_atas_nama }}" readonly>
+			  			<input id="rekening_atas_nama" type="text" name="rekening_atas_nama" class="form-control" value="" readonly>
 			  		</div>
 
 			  		<div class="form-group {{ $errors->has('total_gaji') ? ' has-error' : '' }}">
@@ -260,26 +199,6 @@
 			  		</div>
 			  	</form>
 
-			  	<!-- <script src="{{ asset ('assets/ajax/jquery.min.js') }}"></script>
-				    <script>
-				        $('.form-group').on('input','.prc',function(){
-				            var totalSum = 0;
-				            var gaji_pokok = document.getElementById('gaji_pokok').value;
-				            var tunjangan_jabatan = document.getElementById('tunjangan_jabatan').value;
-				            var tunjangan_keluarga = document.getElementById('tunjangan_keluarga').value;
-				            var uang_makan = document.getElementById('uang_makan').value;
-				            var uang_lembur = document.getElementById('uang_lembur').value;
-				            var pot_pph = document.getElementById('persen_pot_pph').value;
-				            var pot_jamsostek = document.getElementById('persen_pot_jamsostek').value;
-				            $('.form-group .prc').each(function(){
-				                var inputVal = $(this).val();
-				                if($.isNumeric(inputVal)){
-				                    totalSum += parseFloat(inputVal);
-				                }
-				            });
-				            $('#total_gaji').val(totalSum);
-				        });
-					</script> -->
 					<button value="calculate" onclick="HitungGaji()">Calculate</button>
 					<script type="text/javascript">
 		
@@ -287,10 +206,10 @@
 							var gaji_pokok = parseFloat(document.getElementById('gaji_pokok').value);
 				            var tunjangan_jabatan = parseFloat(document.getElementById('tunjangan_jabatan').value);
 				            var tunjangan_keluarga = parseFloat(document.getElementById('tunjangan_keluarga').value);
-				            var uang_lembur = parseFloat(document.getElementById('uang_lembur').value);
+				            var total_uang_lembur = parseFloat(document.getElementById('total_uang_lembur').value);
 				            var pot_pph = parseFloat(document.getElementById('persen_pot_pph').value);
 				            var pot_jamsostek = parseFloat(document.getElementById('persen_pot_jamsostek').value);
-							var calculate = gaji_pokok + tunjangan_jabatan + tunjangan_keluarga + uang_lembur;
+							var calculate = gaji_pokok + tunjangan_jabatan + tunjangan_keluarga + total_uang_lembur;
 							var calculatepph = calculate * pot_pph / 100;
 							var hasilpotpph = calculate - calculatepph;
 							var calculatebpjs = hasilpotpph * pot_jamsostek / 100;
@@ -298,10 +217,57 @@
 							console.log(calculate);
 							document.getElementById('total_gaji').value = total_gaji;
 						}
-		</script>
+					</script>
+					<script src="{{ asset ('assets/ajax/jquery.min.js') }}"></script>
+			    	<script>
+			        $('.form-group').on('input','.prc',function(){
+			            var totalSum = 0;
+			            var jumlah_jam_lembur = document.getElementById('jumlah_jam_lembur').value;
+			            var harga = document.getElementById('harga').value;
+			            $('.form-group .prc').each(function(){
+			                var inputVal = ( harga * jumlah_jam_lembur)/2;
+			                if($.isNumeric(inputVal)){
+			                    totalSum += parseFloat(inputVal);
+			                }
+			            });
+			            $('#total_uang_lembur').val(totalSum);
+			        });
+					</script>
 			  </div>
 			</div>	
 		</div>
 	</div>
 </div>
+@endsection
+@section('js')
+					<script type="text/javascript">
+	
+						$("#karyawan_id").change(function()
+						{
+							var id=$(this).val();
+							$.ajax
+
+							({
+								type: "GET",
+								url: "/gaji/getKaryawan",
+								data: {id: id},
+								cache: false,
+								dataType:"json",
+								success: function(data)
+								{
+									$("input[name='karyawan_id']").val(data.karyawan_id);
+									$("input[name='gaji_pokok']").val(data.gaji_pokok);
+									$("input[name='tunjangan_jabatan']").val(data.tunjangan_jabatan);
+									$("input[name='tunjangan_keluarga']").val(data.tunjangan_keluarga);
+									$("input[name='jabatan']").val(data.jabatan);
+									$("input[name='divisi']").val(data.divisi);
+									$("input[name='departemen']").val(data.departemen);
+									$("input[name='nama_bank']").val(data.nama_bank);
+									$("input[name='nomor_rekening']").val(data.nomor_rekening);
+									$("input[name='rekening_atas_nama']").val(data.rekening_atas_nama);
+								}
+							});
+						});
+
+					</script>
 @endsection

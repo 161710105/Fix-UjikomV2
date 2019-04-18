@@ -8,7 +8,6 @@ use App\Divisi;
 use App\Jabatan;
 use App\Departemen;
 use App\Gaji;
-use App\Lembur;
 use DB;
 use PDF;
 use Session;
@@ -68,7 +67,6 @@ class KaryawanController extends Controller
             'kode_departemen' => 'required|',
             'gaji_pokok' => 'required|',
             'tanggal_diangkat' => 'required|',
-            'tanggal_keluar' => 'required|',
             'nama_bank' => 'required|',
             'nomor_rekening' => 'required|',
             'rekening_atas_nama' => 'required|'
@@ -99,7 +97,6 @@ class KaryawanController extends Controller
         $karyawan->kode_departemen = $request->kode_departemen;
         $karyawan->gaji_pokok = $request->gaji_pokok;
         $karyawan->tanggal_diangkat = $request->tanggal_diangkat;
-        $karyawan->tanggal_keluar = $request->tanggal_keluar;
         $karyawan->nama_bank = $request->nama_bank;
         $karyawan->nomor_rekening = $request->nomor_rekening;
         $karyawan->rekening_atas_nama = $request->rekening_atas_nama;
@@ -176,7 +173,6 @@ class KaryawanController extends Controller
             'kode_departemen' => 'required|',
             'gaji_pokok' => 'required|',
             'tanggal_diangkat' => 'required|',
-            'tanggal_keluar' => 'required|',
             'nama_bank' => 'required|',
             'nomor_rekening' => 'required|',
             'rekening_atas_nama' => 'required|'
@@ -199,14 +195,13 @@ class KaryawanController extends Controller
         $karyawan->kode_departemen = $request->kode_departemen;
         $karyawan->gaji_pokok = $request->gaji_pokok;
         $karyawan->tanggal_diangkat = $request->tanggal_diangkat;
-        $karyawan->tanggal_keluar = $request->tanggal_keluar;
         $karyawan->nama_bank = $request->nama_bank;
         $karyawan->nomor_rekening = $request->nomor_rekening;
         $karyawan->rekening_atas_nama = $request->rekening_atas_nama;
         $karyawan->save();
         Session::flash("flash_notification", [
         "level"=>"success",
-        "message"=>"Berhasil mengedit <b>$karyawan->nama</b>"
+        "message"=>"Berhasil mengubah data <b>$karyawan->nama</b>"
         ]);
         return redirect()->route('karyawan.index');
     }
@@ -219,14 +214,8 @@ class KaryawanController extends Controller
      */
     public function destroy($id)
     {
-        Alert::error('Data Successfully Deleted','Good Job')->autoclose(2000);
-        $karyawan = Karyawan::findOrFail($id);
-        $karyawan->delete();
-        Session::flash("flash_notification", [
-        "level"=>"success",
-        "message"=>"Data Berhasil dihapus"
-        ]);
-        return redirect()->route('karyawan.index');
+        $karyawan = Karyawan::findOrFail($id)->delete();
+        return redirect()->back();
     }
 
 }

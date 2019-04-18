@@ -38,7 +38,6 @@ class CreateKaryawansTable extends Migration
                   ->onUpdate('cascade')->onDelete('cascade');
             $table->integer('gaji_pokok');
             $table->date('tanggal_diangkat');
-            $table->date('tanggal_keluar');
             $table->string('nama_bank');
             $table->string('nomor_rekening');
             $table->string('rekening_atas_nama');

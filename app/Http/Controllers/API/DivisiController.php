@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Karyawan;
+use App\Divisi;
 
-class LatihanController extends Controller
+class DivisiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class LatihanController extends Controller
      */
     public function index()
     {
-        $karyawan = Karyawan::all();
-        return response()->json($karyawan, 200);
+        $divisi = Divisi::all();
+        return response()->json($divisi, 200);
     }
 
     /**
@@ -37,7 +37,7 @@ class LatihanController extends Controller
      */
     public function store(Request $request)
     {
-    
+        //
     }
 
     /**
@@ -48,8 +48,7 @@ class LatihanController extends Controller
      */
     public function show($id)
     {
-        $karyawan = Karyawan::findOrfail($id);
-        return response()->json($karyawan, 201);
+        //
     }
 
     /**

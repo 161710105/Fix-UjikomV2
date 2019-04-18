@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('konten')
+@include('layouts._flash')
 		<div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
@@ -19,7 +20,7 @@
 			  	<form action="{{ route('divisi.store') }}" method="post" >
 			  		{{ csrf_field() }}
 			  		<div class="form-group {{ $errors->has('kode_divisi') ? ' has-error' : '' }}">
-			  			<label class="control-label">Kode Cabang</label>	
+			  			<label class="control-label">Kode Divisi</label>	
 			  			<input type="text" name="kode_divisi" class="form-control"  required>
 			  			@if ($errors->has('kode_divisi'))
                             <span class="help-block">

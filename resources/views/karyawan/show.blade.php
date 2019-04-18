@@ -14,71 +14,6 @@
                     </div>
                 </div>
         </div>
-<div class="col-lg-4 col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <strong class="card-title mb-3">Profile Card</strong>
-            </div>
-            <div class="card-body">
-                <div class="mx-auto d-block">
-                    <img class="rounded-circle mx-auto d-block" src="{{ asset ('images/admin.jpg') }}" alt="Card image cap">
-                    <br>
-                    <!-- <h6 class="text-sm-center mt-2 mb-1">{{ $karyawan->nomor_induk }}</h6>
-                    <hr>
-                    <h6 class="text-sm-center mt-2 mb-1">{{ $karyawan->nama }}</h6> -->
-                    <center>
-                    <table border="0">
-					<tbody>
-					<hr>
-					<tr>
-					<td>Nomor Induk</td>
-					<td>&nbsp;:&nbsp;</td>
-					<td>{{ $karyawan->nomor_induk }}</td>
-					</tr>
-					<tr>
-					<td>Nama</td>
-					<td >&nbsp;:&nbsp;</td>
-					<td>{{ $karyawan->nama}}</td>
-					</tr>
-					<tr>
-					<td>Tempat Lahir</td>
-					<td>&nbsp;:&nbsp;</td>
-					<td>{{ $karyawan->tempat_lahir}}</td>
-					</tr>
-					<tr>
-					<td>Tanggal Lahir</td>
-					<td>&nbsp;:&nbsp;</td>
-					<td>{{ $karyawan->tanggal_lahir}}</td>
-					</tr>
-					<tr>
-					<td>Jabatan</td>
-					<td>&nbsp;:&nbsp;</td>
-					<td>{{ $karyawan->Jabatan->nama_jabatan}}</td>
-					</tr>
-					<tr>
-					<td>Divisi</td>
-					<td>&nbsp;:&nbsp;</td>
-					<td>{{ $karyawan->Divisi->nama_divisi}}</td>
-					</tr>
-					<tr>
-					<td>Departemen</td>
-					<td>&nbsp;:&nbsp;</td>
-					<td>{{ $karyawan->Departemen->nama_departemen}}</td>
-					</tr>
-					</tbody>
-					</table>
-				</center>
-                </div>
-                <hr>
-                <div class="card-text text-sm-center">
-                    <a href="#"><i class="fa fa-facebook pr-1"></i></a>
-                    <a href="#"><i class="fa fa-twitter pr-1"></i></a>
-                    <a href="#"><i class="fa fa-linkedin pr-1"></i></a>
-                    <a href="#"><i class="fa fa-pinterest pr-1"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="col-xs-6 col-sm-6">
                         <div class="card" style="width: 685px">
                             <div class="card-header">
@@ -98,6 +33,27 @@
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-user"></i></div>
                                         <input class="form-control" value="{{ $karyawan->nama}}" readonly>
+                                    </div>
+
+                                <div class="form-group">
+                                    <label class=" form-control-label">Departemen</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-building-o"></i></div>
+                                        <input class="form-control" value="{{ $karyawan->Departemen->nama_departemen }}" readonly>
+                                    </div>
+
+                                <div class="form-group">
+                                    <label class=" form-control-label">Divisi</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-sitemap"></i></div>
+                                        <input class="form-control" value="{{ $karyawan->Divisi->nama_divisi}}" readonly>
+                                    </div>
+
+                                <div class="form-group">
+                                    <label class=" form-control-label">Jabatan</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-users"></i></div>
+                                        <input class="form-control" value="{{ $karyawan->Jabatan->nama_jabatan}}" readonly>
                                     </div>
                                     
                                 </div>

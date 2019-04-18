@@ -68,5 +68,11 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+    }
+
+    public function showRegistrationForm()
+    {
+        return view('errors.404');
     }
 }

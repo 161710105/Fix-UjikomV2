@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('konten')
+@include('layouts._flash')
 		<div class="breadcrumbs">
             <div class="col-sm-4">
                 <div class="page-header float-left">
@@ -29,7 +30,7 @@
                                             <th>Kode Jabatan</th>
                                             <th>Nama Jabatan</th>
                                             <th>Tunjangan Jabatan</th>
-                                            <th>Level Jabatan</th>
+                                            <!-- <th>Level Jabatan</th> -->
                                             <th>Action</th>
                                             
                                         </tr>
@@ -43,7 +44,7 @@
 									    	<td><p>{{ $data->kode_jabatan }}</p></td>
 									    	<td>{{ $data->nama_jabatan}}</td>
 									    	<td>Rp. {{ number_format($data->tunjangan_jabatan)}},-</td>
-									    	<td>{{ $data->level_jabatan}}</td>
+									    	<!-- <td>{{ $data->level_jabatan}}</td> -->
 				    	
 <td><form method="post" action="{{ route('jabatan.destroy',$data->id) }}">
 	<a class="btn btn-warning btn-sm" href="{{ route('jabatan.edit',$data->id) }}"><i class="fa fa-pencil"></i>&nbsp;Edit</a>
@@ -51,7 +52,7 @@
 		<input name="_token" type="hidden" value="{{ csrf_token() }}">
 		<input type="hidden" name="_method" value="DELETE">
 
-		<button id="button-delete" type="submit" class="btn btn-danger btn-sm"><i class="fa fa-times"></i>&nbsp;Delete</button>
+		<button id="button-delete" onclick="return confirm('Are you sure ?')" type="submit" class="btn btn-danger btn-sm"><i class="fa fa-times"></i>&nbsp;Delete</button>
 
 	</form>
 </td>

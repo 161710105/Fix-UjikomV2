@@ -11,59 +11,56 @@
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
+
                     <li class="active">
-                        <a href="index.html"> <i class="menu-icon fa fa-home"></i>Dashboard </a>
+                        <a href="{{ route('home') }}"> <i class="menu-icon fa fa-home"></i><b>DASHBOARD</b></a>
                     </li>
+                    @role('admin')
                     <h3 class="menu-title">Struktur Organisasi</h3><!-- /.menu-title -->
                     
                     <li class="active">
-                        <a href="{{ route('jabatan.index') }}"> <i class="menu-icon fa fa-users"></i>Jabatan </a>
+                        <a href="{{ route('jabatan.index') }}"> <i class="menu-icon fa fa-users"></i><b>JABATAN</b></a>
                     </li>
 
                     <li class="active">
-                        <a href="{{ route('divisi.index') }}"> <i class="menu-icon fa fa-sitemap"></i>Divisi</a>
+                        <a href="{{ route('divisi.index') }}"> <i class="menu-icon fa fa-sitemap"></i><b>DIVISI</b></a>
                     </li>
 
                     <li class="active">
-                        <a href="{{ route('departemen.index') }}"> <i class="menu-icon fa fa-building-o"></i>Departemen</a>
+                        <a href="{{ route('departemen.index') }}"> <i class="menu-icon fa fa-building-o"></i><b>DEPARTEMEN</b></a>
                     </li>
+
+                    @endrole
 
                     <h3 class="menu-title">Karyawan</h3><!-- /.menu-title -->
 
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Karyawan</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-book"></i><a href="{{ route('karyawan.index') }}">Lihat Data Karyawan</a></li>
-                            <li><i class="menu-icon fa fa-edit"></i><a href="charts-flot.html">Kelola Data Karyawan</a></li>
-                        </ul>
+                    <li class="active">
+                        <a href="{{ route('karyawan.index') }}"> <i class="menu-icon fa fa-user"></i><b>KARYAWAN</b></a>
                     </li>
 
                     <h3 class="menu-title">Administrasi</h3><!-- /.menu-title -->
 
-                    <li class="menu-item-has-children dropdown">
+                    <!-- <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-calendar-o"></i>Cuti</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="menu-icon fa fa-book"></i><a href="{{ route('cuti.index') }}">Lihat Data Cuti</a></li>
                             <li><i class="menu-icon fa fa-edit"></i><a href="charts-flot.html">Kelola Data Cuti</a></li>
                             <li><i class="menu-icon fa fa-line-chart"></i><a href="charts-peity.html">Grafik Cuti Karyawan</a></li>
                         </ul>
+                    </li> -->
+
+                    <li class="active">
+                        <a href="{{ route('gaji.index') }}"> <i class="menu-icon fa fa-money"></i><b>GAJI</b></a>
                     </li>
 
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tags"></i>Lembur</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-book"></i><a href="{{ route('lembur.index') }}">Lihat Data Lembur</a></li>
-                            <li><i class="menu-icon fa fa-edit"></i><a href="charts-flot.html">Kelola Data Lembur</a></li>
-                            <li><i class="menu-icon fa fa-line-chart"></i><a href="charts-peity.html">Grafik Lembur Karyawan</a></li>
-                        </ul>
-                    </li>
+                    <h3 class="menu-title">Akun</h3>
 
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-money"></i>Gaji</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-edit"></i><a href="{{ route('gaji.index') }}">Kelola Data Gaji</a></li>
-                            <li><i class="menu-icon fa fa-book"></i><a href="charts-flot.html">Laporan Gaji Karyawan</a></li>
-                        </ul>
+                    <li class="active">
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"> <i class="menu-icon fa fa-cog"></i><b>{{ __('LOGOUT') }}</b></a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
                     </li>
 
                 </ul>
